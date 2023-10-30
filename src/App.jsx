@@ -1,5 +1,9 @@
-import {Bro}
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 export default function App() {
-  return <h1 className='text-red-500'>App</h1>;
+  return <BrowserRouter>
+  <Routes>
+      
+  </Routes>
+  </BrowserRouter>
 }
