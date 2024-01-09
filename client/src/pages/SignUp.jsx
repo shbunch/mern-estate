@@ -7,13 +7,13 @@ export default function SignUp() {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
-	const handlechange = e => {
+	const handlechange = (e) => {
 		setFormData({
 			...formData,
 			[e.target.id]: e.target.value,
 		});
 	};
-	const handleSubmit = async e => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			setLoading(true);
@@ -71,7 +71,7 @@ export default function SignUp() {
 				>
 					{loading ? 'Loading...' : 'Sign Up'}
 				</button>
-				<OAuth/>
+				<OAuth />
 			</form>
 			<div className='flex gap-2 mt-5'>
 				<p>Have an account?</p>
