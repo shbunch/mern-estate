@@ -13,6 +13,7 @@ export default function OAuth() {
 			const auth = getAuth(app);
 
 			const result = await signInWithPopup(auth, provider);
+			console.log('🚀 ~ handleGoogleClick ~ result:', result);
 
 			const res = await fetch('/api/auth/google', {
 				method: 'POST',
@@ -26,6 +27,7 @@ export default function OAuth() {
 				}),
 			});
 			const data = await res.json();
+			console.log("🚀 ~ handleGoogleClick ~ data:", data)
 			dispatch(signInSuccess(data));
 			navigate('/');
 		} catch (error) {
