@@ -1,6 +1,11 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
-import { getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import {
+	getDownloadURL,
+	getStorage,
+	ref,
+	uploadBytesResumable,
+} from 'firebase/storage';
 import { app } from '../firebase';
 
 export default function Profile() {
@@ -23,19 +28,22 @@ export default function Profile() {
 		const storageRef = ref(storage, fileName);
 		const uploadTask = uploadBytesResumable(storageRef, file);
 
-		uploadTask.on('state_changed', (snapshot) => {
-			const progress =
-				(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-			setFilePerc(Math.round(progress));
-		});
-		(error) => {
-			setFileUploadError(true);
-		};
-		() => {
-			getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-				setFormData({ ...formData, avatar: downloadURL })
-			);
-		};
+		uploadTask.on(
+			'state_changed',
+			(snapshot) => {
+				const progress =
+					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				setFilePerc(Math.round(progress));
+			},
+			(error) => {
+				setFileUploadError(true);
+			},
+			() => {
+				getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+					setFormData({ ...formData, avatar: downloadURL })
+				);
+			}
+		);
 	};
 	return (
 		<div className='p-3 max-w-lg mx-auto'>
@@ -54,6 +62,21 @@ export default function Profile() {
 					alt='profile'
 					className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
 				/>
+				<p>
+					{fileUploadError ? (
+						<span className='text-red-700'>Error Image Upload</span>
+					) : filePerc > 0 && filePerc < 100 ? (
+						<span className='text-slate-700'>
+							{`Uploading ${filePerc}%`}
+						</span>
+					) : filePerc === 100 ? (
+						<span className='text-green-700'>
+							Image successfully uploaded!
+						</span>
+					) : (
+						''
+					)}
+				</p>
 				<input
 					type='text'
 					placeholder='username'
