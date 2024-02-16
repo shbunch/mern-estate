@@ -7,7 +7,9 @@ export default function Profile() {
 	const fileRef = useRef(null);
 	const { currentUser } = useSelector((state) => state.user);
 	const [file, setFile] = useState(undefined);
-	console.log(file);
+	const [filePerc, setFilePerc] = useState(0);
+	const [fileUploadError, setFileUploadError] = useState(false);
+	const [formData, setFormData] = useState({});
 
 	useEffect(() => {
 		if (file) {
@@ -24,8 +26,16 @@ export default function Profile() {
 		uploadTask.on('state_changed', (snapshot) => {
 			const progress =
 				(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-			console.log('Upload is ' + progress + '% done');
+			setFilePerc(Math.round(progress));
 		});
+		(error) => {
+			setFileUploadError(true);
+		};
+		() => {
+			getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+				setFormData({ ...formData, avatar: downloadURL })
+			);
+		};
 	};
 	return (
 		<div className='p-3 max-w-lg mx-auto'>
