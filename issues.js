@@ -5,4 +5,6 @@
 
 // Video did not show how to use JWT_SECRET, had to look it up
 
+// Learned a lot about exporting and importing, when to use curly braces and when not to (ie default uses no curly braces)
+
 //TODO Google profile picture not showing up, currentUser.avatar on redux tab is showing default instead of the google profile picture
