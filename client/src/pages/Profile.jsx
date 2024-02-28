@@ -7,6 +7,8 @@ import {
 	uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase';
+import { updateUserStart, updateUserFailure, updateUserSuccess } from '../redux/user/userSlice';
+import { useDispatch } from 'react-redux';
 
 export default function Profile() {
 	const fileRef = useRef(null);
@@ -15,6 +17,7 @@ export default function Profile() {
 	const [filePerc, setFilePerc] = useState(0);
 	const [fileUploadError, setFileUploadError] = useState(false);
 	const [formData, setFormData] = useState({});
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (file) {
@@ -46,14 +49,22 @@ export default function Profile() {
 		);
 	};
 
-const handleChange = (e) => {
-	setFormData({ ...formData, [e.target.id]: e.target.value });
-}
+	const handleChange = (e) => {
+		setFormData({ ...formData, [e.target.id]: e.target.value });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		try {
+			
+		} catch (error) {
+			
+		}
 
 	return (
 		<div className='p-3 max-w-lg mx-auto'>
 			<h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
-			<form className='flex flex-col gap-4'>
+			<form onSubmit={handleSubmit} className='flex flex-col gap-4'>
 				<input
 					onChange={(e) => setFile(e.target.files[0])}
 					type='file'
@@ -69,7 +80,9 @@ const handleChange = (e) => {
 				/>
 				<p className='text-sm self-center'>
 					{fileUploadError ? (
-						<span className='text-red-700'>Error Image Upload(image must be less than 2 mb)</span>
+						<span className='text-red-700'>
+							Error Image Upload(image must be less than 2 mb)
+						</span>
 					) : filePerc > 0 && filePerc < 100 ? (
 						<span className='text-slate-700'>
 							{`Uploading ${filePerc}%`}
@@ -89,7 +102,7 @@ const handleChange = (e) => {
 					id='username'
 					className='border p-3 rounded-lg'
 					onChange={handleChange}
-					/>
+				/>
 				<input
 					type='text'
 					placeholder='email'
