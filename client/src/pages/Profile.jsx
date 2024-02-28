@@ -7,7 +7,11 @@ import {
 	uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase';
-import { updateUserStart, updateUserFailure, updateUserSuccess } from '../redux/user/userSlice';
+import {
+	updateUserStart,
+	updateUserFailure,
+	updateUserSuccess,
+} from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 
 export default function Profile() {
@@ -53,13 +57,22 @@ export default function Profile() {
 		setFormData({ ...formData, [e.target.id]: e.target.value });
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			
+			dispatch(updateUserStart());
+			const res = await fetch(`/api/user/update/${currentUser._id}`, {
+
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData),
+			});
 		} catch (error) {
-			
+			dispatch(updateUserFailure(error.message));
 		}
+	};
 
 	return (
 		<div className='p-3 max-w-lg mx-auto'>
