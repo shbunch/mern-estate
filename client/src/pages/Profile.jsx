@@ -69,6 +69,13 @@ export default function Profile() {
 				},
 				body: JSON.stringify(formData),
 			});
+			const data = await res.json();
+			if (data.success === false) {
+				dispatch(updateUserFailure(data.message));
+				return;
+			}
+
+			dispatch(updateUserSuccess(data));
 		} catch (error) {
 			dispatch(updateUserFailure(error.message));
 		}
