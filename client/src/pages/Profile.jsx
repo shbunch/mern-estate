@@ -16,11 +16,12 @@ import { useDispatch } from 'react-redux';
 
 export default function Profile() {
 	const fileRef = useRef(null);
-	const { currentUser } = useSelector((state) => state.user);
+	const { currentUser, loading, error } = useSelector((state) => state.user);
 	const [file, setFile] = useState(undefined);
 	const [filePerc, setFilePerc] = useState(0);
 	const [fileUploadError, setFileUploadError] = useState(false);
 	const [formData, setFormData] = useState({});
+	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -62,7 +63,6 @@ export default function Profile() {
 		try {
 			dispatch(updateUserStart());
 			const res = await fetch(`/api/user/update/${currentUser._id}`, {
-
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -76,6 +76,7 @@ export default function Profile() {
 			}
 
 			dispatch(updateUserSuccess(data));
+			setUpdateSuccess(true);
 		} catch (error) {
 			dispatch(updateUserFailure(error.message));
 		}
@@ -138,14 +139,22 @@ export default function Profile() {
 					className='border p-3 rounded-lg'
 					onChange={handleChange}
 				/>
-				<button className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
-					Update
+				<button
+					disabled={loading}
+					className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
+				>
+					{loading ? 'Loading...' : 'Update'}
 				</button>
 			</form>
 			<div className='flex justify-between mt-5'>
 				<span className='text-red-700 cursor-pointer'>Delete account</span>
 				<span className='text-red-700 cursor-pointer'>Sign Out</span>
 			</div>
+
+			<p className='text-red-700 mt-5'>{error ? error : ''}</p>
+			<p className='text-green-700 mt-5'>
+				{updateSuccess ? 'User is updated successfully!' : ''}
+			</p>
 		</div>
 	);
 }
