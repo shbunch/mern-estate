@@ -8,3 +8,5 @@
 // Learned a lot about exporting and importing, when to use curly braces and when not to (ie default uses no curly braces)
 
 //TODO Google profile picture not showing up, currentUser.avatar on redux tab is showing default instead of the google profile picture
+
+//I think this was solved by deleting the existing user and resigning in with Google
