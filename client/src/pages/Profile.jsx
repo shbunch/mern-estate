@@ -82,6 +82,14 @@ export default function Profile() {
 		}
 	};
 
+	const handleDeleteUser = async () => {
+		try {
+			
+		} catch (error) {
+			
+		}
+	}
+
 	return (
 		<div className='p-3 max-w-lg mx-auto'>
 			<h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -147,7 +155,7 @@ export default function Profile() {
 				</button>
 			</form>
 			<div className='flex justify-between mt-5'>
-				<span className='text-red-700 cursor-pointer'>Delete account</span>
+				<span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete account</span>
 				<span className='text-red-700 cursor-pointer'>Sign Out</span>
 			</div>
 
