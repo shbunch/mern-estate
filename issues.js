@@ -10,3 +10,5 @@
 //TODO Google profile picture not showing up, currentUser.avatar on redux tab is showing default instead of the google profile picture
 
 //I think this was solved by deleting the existing user and resigning in with Google
+
+//After redownloading the project, iCloud Drive renamed my project by adding a 2 to the end of the folder name deep in the git files, preventing me from pushing changes to the original project
