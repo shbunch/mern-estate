@@ -113,7 +113,7 @@ export default function Profile() {
 				return;
 			}
 		} catch (error) {
-			
+			dispatch(deleteUserFailure(data.message))
 		}
 	}
 	return (
