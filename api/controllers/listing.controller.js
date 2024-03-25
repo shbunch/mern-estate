@@ -8,3 +8,6 @@ export const createListing = async (req, res, next) => {
 		next(error);
 	}
 };
+
+
+//Create a new listing in the database and test Insomnia
