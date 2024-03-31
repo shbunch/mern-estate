@@ -6,7 +6,7 @@ export default function CreateListing() {
 			<h1 className='text-3xl font-semibold text-center my-7'>
 				Create a Listing
 			</h1>
-			<form className='flex flex-col sm:flex-row'>
+			<form className='flex flex-col sm:flex-row gap-4'>
 				<div className='flex flex-col gap-4 flex-1'>
 					<input
 						type='text'
@@ -53,7 +53,7 @@ export default function CreateListing() {
 							<span>Offer</span>
 						</div>
 					</div>
-					<div className=''>
+					<div className='flex flex-wrap gap-6'>
 						<div className='flex items-center gap-2'>
 							<input
 								type='number'
@@ -61,7 +61,7 @@ export default function CreateListing() {
 								min='1'
 								max='10'
 								required
-								className='p-3 border-gray-300 rounded-lg'
+								className='p-3 border border-gray-300 rounded-lg'
 							/>
 							<p>Beds</p>
 						</div>
@@ -72,7 +72,7 @@ export default function CreateListing() {
 								min='1'
 								max='10'
 								required
-								className='p-3 border-gray-300 rounded-lg'
+								className='p-3 border border-gray-300 rounded-lg'
 							/>
 							<p>Baths</p>
 						</div>
@@ -83,20 +83,26 @@ export default function CreateListing() {
 								min='1'
 								max='10'
 								required
-								className='p-3 border-gray-300 rounded-lg'
+								className='p-3 border border-gray-300 rounded-lg'
 							/>
-							<p>Regular price</p>
+							<div className='flex flex-col items-center' >
+								<p>Regular price</p>
+								<span className='text-xs'>($ / month)</span>
+							</div>
 						</div>
 						<div className='flex items-center gap-2'>
 							<input
 								type='number'
-								id='discountedPrice'
+								id='discountPrice'
 								min='1'
 								max='10'
 								required
-								className='p-3 border-gray-300 rounded-lg'
+								className='p-3 border border-gray-300 rounded-lg'
 							/>
-							<p>Discounted Price</p>
+							<div className='flex flex-col items-center'>
+								<p>Discounted Price</p>
+								<span className='text-xs'>($ / month)</span>
+							</div>
 						</div>
 					</div>
 				</div>
