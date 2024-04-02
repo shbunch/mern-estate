@@ -16,3 +16,5 @@
 // Moved entire repo to another section of hard drive that was not conflicting with iCloud Drive
 
 // Width of inputs are not the same size as video, extremely wide..using w-24 as tmp fix but not ideal
+
+// FIGURED OUT IT WAS BECAUSE OF MY BROWSER!! Adjusted my firefox view settings but not for Chrome so it looks much better in Chrome
