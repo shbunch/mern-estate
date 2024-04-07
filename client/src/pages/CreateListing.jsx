@@ -7,6 +7,7 @@ export default function CreateListing() {
 	const [formData, setFormData] = useState({
 		imageUrls: [],
 	});
+	const [imageUploadError, setImageUploadError] = useState(false);
 	console.log(formData);
 	const handleImageSubmit = (e) => {
 		if (files.length > 0 && files.length < 7) {
@@ -20,6 +21,7 @@ export default function CreateListing() {
 					...formData,
 					imageUrls: formData.imageUrls.concat(urls),
 				});
+				setImageUploadError(false);
 			});
 		}
 	};
