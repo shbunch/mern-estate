@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import {
+	getDownloadURL,
+	getStorage,
+	ref,
+	uploadBytesResumable,
+} from 'firebase/storage';
 import { app } from '../firebase';
 
 export default function CreateListing() {
@@ -10,19 +15,25 @@ export default function CreateListing() {
 	const [imageUploadError, setImageUploadError] = useState(false);
 	console.log(formData);
 	const handleImageSubmit = (e) => {
-		if (files.length > 0 && files.length < 7) {
+		if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
 			const promises = [];
 
 			for (let i = 0; i < files.length; i++) {
 				promises.push(storeImage(files[i]));
 			}
-			Promise.all(promises).then((urls) => {
-				setFormData({
-					...formData,
-					imageUrls: formData.imageUrls.concat(urls),
+			Promise.all(promises)
+				.then((urls) => {
+					setFormData({
+						...formData,
+						imageUrls: formData.imageUrls.concat(urls),
+					});
+					setImageUploadError(false);
+				})
+				.catch((err) => {
+					setImageUploadError('Image upload failed (2mb max per image');
 				});
-				setImageUploadError(false);
-			});
+		} else {
+			setImageUploadError('You can only upload 6 images per listing');
 		}
 	};
 
@@ -35,7 +46,7 @@ export default function CreateListing() {
 			uploadTask.on(
 				'state_changed',
 				(snapshot) => {
-					const progress = 
+					const progress =
 						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 					console.log(`Upload is ${progress}% done`);
 				},
@@ -179,6 +190,9 @@ export default function CreateListing() {
 							Upload
 						</button>
 					</div>
+					<p className='text-red-700 text-sm'>
+						{imageUploadError && imageUploadError}
+					</p>
 					<button className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
 						Create Listing
 					</button>
