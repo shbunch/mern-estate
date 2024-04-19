@@ -9,7 +9,7 @@ import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 
 export default function CreateListing() {
-	const { currentUser } = useSelector((state) => state.user);
+	const {currentUser} = useSelector(state => state.user);
 	const [files, setFiles] = useState([]);
 	const [formData, setFormData] = useState({
 		imageUrls: [],
@@ -124,10 +124,7 @@ export default function CreateListing() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			if (formData.imageUrls.length < 1)
-				return setError('You must upload at least one image');
-			if (+formData.regularPrice < +formData.discountPrice)
-				return setError('Discount price must be lower than regular price');
+			if (formData.imageUrls.length < 1) return setError('Please upload at least one image');
 			setLoading(true);
 			setError(false);
 			const res = await fetch('/api/listing/create', {
@@ -285,22 +282,22 @@ export default function CreateListing() {
 							</div>
 						</div>
 						{formData.offer && (
-						<div className='flex items-center gap-2'>
-							<input
-								type='number'
-								id='discountPrice'
-								min='0'
-								max='10000000'
-								required
-								className='p-3 border border-gray-300 rounded-lg'
-								onChange={handleChange}
-								value={formData.discountPrice}
-							/>
-							<div className='flex flex-col items-center'>
-								<p>Discounted Price</p>
-								<span className='text-xs'>($ / month)</span>
+							<div className='flex items-center gap-2'>
+								<input
+									type='number'
+									id='discountPrice'
+									min='0'
+									max='10000000'
+									required
+									className='p-3 border border-gray-300 rounded-lg'
+									onChange={handleChange}
+									value={formData.discountPrice}
+								/>
+								<div className='flex flex-col items-center'>
+									<p>Discounted Price</p>
+									<span className='text-xs'>($ / month)</span>
+								</div>
 							</div>
-						</div>
 						)}
 					</div>
 				</div>
@@ -352,7 +349,10 @@ export default function CreateListing() {
 								</button>
 							</div>
 						))}
-					<button className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
+					<button
+						disabled={loading || uploading}
+						className='p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+					>
 						{loading ? 'Creating...' : 'Create listing'}
 					</button>
 					{error && <p className='text-red-700 text-sm'>{error}</p>}
