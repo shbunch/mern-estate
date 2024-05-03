@@ -20,6 +20,7 @@ import {
 } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { set } from 'mongoose';
 
 export default function Profile() {
 	const fileRef = useRef(null);
@@ -30,6 +31,7 @@ export default function Profile() {
 	const [formData, setFormData] = useState({});
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const [showListingsError, setShowListingsError] = useState(false);
+	const [userListings, setUserListings] = useState([]);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -131,10 +133,11 @@ export default function Profile() {
 				setShowListingsError(true);
 				return;
 			}
+			setUserListings(data);
 		} catch (error) {
 			setShowListingsError(true);
 		}
-	}
+	};
 
 	return (
 		<div className='p-3 max-w-lg mx-auto'>
@@ -225,8 +228,16 @@ export default function Profile() {
 			<p className='text-green-700 mt-5'>
 				{updateSuccess ? 'User is updated successfully!' : ''}
 			</p>
-			<button onClick={handleShowListings} className='text-green-700 w-full'>Show Listings</button>
-			<p className='text-red-700 mt-5'>{showListingsError ? 'Error showing listings' : ''}</p>
+			<button onClick={handleShowListings} className='text-green-700 w-full'>
+				Show Listings
+			</button>
+			<p className='text-red-700 mt-5'>
+				{showListingsError ? 'Error showing listings' : ''}
+			</p>
+
+			{userListings &&
+				userListings.length > 0 &&
+				userListings.map((listing) => <div className=''></div>)}
 		</div>
 	);
 }
