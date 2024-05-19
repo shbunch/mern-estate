@@ -18,3 +18,5 @@
 // Width of inputs are not the same size as video, extremely wide..using w-24 as tmp fix but not ideal
 
 // FIGURED OUT IT WAS BECAUSE OF MY BROWSER!! Adjusted my firefox view settings but not for Chrome so it looks much better in Chrome
+
+// Ran into an issue where I had a typo, which created an error message, but the error message was different depending on the browser. Need to be careful of this in the future
