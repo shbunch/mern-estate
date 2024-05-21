@@ -8,6 +8,7 @@ import {
 import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { set } from 'mongoose';
 
 export default function CreateListing() {
 	const { currentUser } = useSelector((state) => state.user);
@@ -32,13 +33,19 @@ export default function CreateListing() {
 	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
-	
-	useEffect(() => {	
+
+	useEffect(() => {
 		const fetchListing = async () => {
 			const listingId = params.listingID;
-			console.log(listingId);
-		}
-		
+			const res = await fetch(`/api/listing/get/${listingId}`);
+			const data = await res.json();
+			if (data.success === false) {
+				console.log(data.message);
+				return;
+			}
+			setFormData(data);
+		};
+
 		fetchListing();
 	}, []);
 
