@@ -147,7 +147,7 @@ export default function CreateListing() {
 				return setError('Please upload at least one image');
 			setLoading(true);
 			setError(false);
-			const res = await fetch('/api/listing/create', {
+			const res = await fetch(`/api/listing/update/${params.listingID}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
