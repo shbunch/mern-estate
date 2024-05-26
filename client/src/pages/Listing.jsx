@@ -9,7 +9,7 @@ export default function Listing() {
 	useEffect(() => {
 		const fetchListing = async () => {
 			try {
-				setLoading(true)
+				setLoading(true);
 				const res = await fetch(`/api/listing/get/${params.listingId}`);
 				const data = await res.json();
 				if (data.success === false) {
@@ -29,8 +29,13 @@ export default function Listing() {
 	}, [params.listingId]);
 	console.log(loading);
 
-	return <main>
-		{loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
-		{error && <p className='text-center my-7 text-2xl'>Something went wrong!</p>}
-	</main>;
+	return (
+		<main>
+			{loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
+			{error && (
+				<p className='text-center my-7 text-2xl'>Something went wrong!</p>
+			)}
+			{listing && !loading && !error && <h1>{listing.name}</h1>}
+		</main>
+	);
 }
