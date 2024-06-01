@@ -82,6 +82,11 @@ export default function Listing() {
 							Link copied!
 						</p>
 					)}
+					<div>
+						<p>
+							{listing.name} - ${' '}
+						</p>
+					</div>
 				</div>
 			)}
 		</main>
