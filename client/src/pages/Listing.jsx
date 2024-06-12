@@ -98,6 +98,9 @@ export default function Listing() {
 							<p className='bg-red-700 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
 								{listing.type === 'rent' ? 'For Rent' : 'For Sale'}
 							</p>
+							{
+								//Create section for checking offer
+							}
 						</div>
 					</div>
 				</div>
