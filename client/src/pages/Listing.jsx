@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
+import { useSelector } from 'react-redux';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css/bundle';
 import {
@@ -21,6 +22,7 @@ export default function Listing() {
 	const [error, setError] = useState(false);
 	const [copied, setCopied] = useState(false);
 	const params = useParams();
+	const currentUser = useSelector((state) => state.user);
 	useEffect(() => {
 		const fetchListing = async () => {
 			try {
@@ -42,7 +44,6 @@ export default function Listing() {
 		};
 		fetchListing();
 	}, [params.listingId]);
-	console.log(loading);
 
 	return (
 		<main>
@@ -112,22 +113,33 @@ export default function Listing() {
 						</p>
 						<ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
 							<li className='flex items-center gap-1 whitespace-nowrap'>
-								<FaBed className='text-lg'/>
-								{listing.bedrooms > 1 ? `${listing.bedrooms} beds ` : `${listing.bedrooms} bed `}
+								<FaBed className='text-lg' />
+								{listing.bedrooms > 1
+									? `${listing.bedrooms} beds `
+									: `${listing.bedrooms} bed `}
 							</li>
 							<li className='flex items-center gap-1 whitespace-nowrap'>
-								<FaBath className='text-lg'/>
-								{listing.bathrooms > 1 ? `${listing.bathrooms} baths ` : `${listing.bathrooms} bath `}
+								<FaBath className='text-lg' />
+								{listing.bathrooms > 1
+									? `${listing.bathrooms} baths `
+									: `${listing.bathrooms} bath `}
 							</li>
 							<li className='flex items-center gap-1 whitespace-nowrap'>
-								<FaParking className='text-lg'/>
-								{listing.parling ? 'Parking available' : 'No parking available'}
+								<FaParking className='text-lg' />
+								{listing.parling
+									? 'Parking available'
+									: 'No parking available'}
 							</li>
 							<li className='flex items-center gap-1 whitespace-nowrap'>
-								<FaChair className='text-lg'/>
+								<FaChair className='text-lg' />
 								{listing.furnished ? 'Furnished' : 'Not furnished'}
 							</li>
 						</ul>
+						{currentUser && listing.userRef !== currentUser._id && (
+							<button className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>
+								Contact Landlord
+							</button>
+						)}
 					</div>
 				</div>
 			)}
